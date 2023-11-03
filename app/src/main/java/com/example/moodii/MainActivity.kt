@@ -12,10 +12,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.moodii.ui.theme.MoodiiTheme
@@ -90,17 +92,25 @@ fun TherapistItem(therapist: MainActivity.Therapist) {
             Text(text = therapist.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, fontFamily = comfortaa)
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = therapist.title, style = MaterialTheme.typography.bodyMedium, fontStyle = FontStyle.Italic)
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Adding the horizontal line here
+            Divider(color = MaterialTheme.colorScheme.secondary, thickness = 1.dp)
+
+            Spacer(modifier = Modifier.height(8.dp))
             Text(text = therapist.description, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.End
             ) {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone icon")
-                Text(text = therapist.phone, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = therapist.phone, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
             }
+
         }
     }
 }
