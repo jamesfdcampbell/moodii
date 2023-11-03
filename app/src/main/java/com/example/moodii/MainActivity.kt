@@ -22,6 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.moodii.ui.theme.MoodiiTheme
 import java.io.InputStream
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : ComponentActivity() {
 
@@ -80,6 +84,8 @@ fun TherapistItem(therapist: MainActivity.Therapist) {
 
     val comfortaa = FontFamily(Font(R.font.comfortaa_regular))
 
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -109,7 +115,18 @@ fun TherapistItem(therapist: MainActivity.Therapist) {
                 ) {
                     Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone icon")
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = therapist.phone, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = therapist.phone,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.clickable {
+                            // Using Intent to start the phone dialer
+                            val intent = Intent(Intent.ACTION_DIAL).apply {
+                                data = Uri.parse("tel:${therapist.phone}")
+                            }
+                            context.startActivity(intent)
+                        }
+                    )
                 }
             }
             else {
