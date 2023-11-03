@@ -101,18 +101,31 @@ fun TherapistItem(therapist: MainActivity.Therapist) {
             Text(text = therapist.description, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(12.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone icon")
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(text = therapist.phone, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+            if (therapist.phone != "" && therapist.phone != "null") {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone icon")
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = therapist.phone, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                }
             }
-
+            else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone icon")
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "N/A", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                }
+            }
         }
     }
+
 }
 
 val sampleTherapists = listOf(
@@ -126,7 +139,7 @@ val sampleTherapists = listOf(
         "Debbie Lynn Tabin",
         "Registered Social Worker, BSW, RSW, MAL",
         "Do you find it hard?",
-        "587-401-2212"
+        "null"
     )
 )
 
