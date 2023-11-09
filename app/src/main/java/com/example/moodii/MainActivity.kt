@@ -26,7 +26,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : ComponentActivity() {
 
@@ -101,7 +106,27 @@ fun TherapistList(therapists: List<MainActivity.Therapist>) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(bottomBar = {}
+    ) {
+        BottomNavGraph(navController = navController)
+    }
+}
 
+@Composable
+fun BottomBar(navController: NavHostController) {
+    val screens = listOf(
+        BottomBarScreen.Therapists,
+        BottomBarScreen.MoodTracking,
+        BottomBarScreen.MoodLifters
+    )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+}
 
 @Composable
 fun TherapistItem(therapist: MainActivity.Therapist) {
