@@ -24,6 +24,7 @@ import com.example.moodii.ui.theme.MoodiiTheme
 import java.io.InputStream
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.platform.LocalContext
 
@@ -70,22 +71,41 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+val comfortaa = FontFamily(Font(R.font.comfortaa_regular))
+
 @Composable
 fun TherapistList(therapists: List<MainActivity.Therapist>) {
-    LazyColumn {
-        items(therapists) { therapist ->
-            TherapistItem(therapist)
+    Column {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            color = MaterialTheme.colorScheme.primary,
+            tonalElevation = 3.dp
+        ) {
+            Text(
+                text = "Local Therapists",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontFamily = comfortaa,
+                    color = Color.White
+                ),
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+        }
+        // LazyColumn for scrolling content
+        LazyColumn {
+            items(therapists) { therapist ->
+                TherapistItem(therapist)
+            }
         }
     }
 }
 
+
+
 @Composable
 fun TherapistItem(therapist: MainActivity.Therapist) {
-
-    val comfortaa = FontFamily(Font(R.font.comfortaa_regular))
-
     val context = LocalContext.current
-
     Card(
         modifier = Modifier
             .padding(8.dp)
