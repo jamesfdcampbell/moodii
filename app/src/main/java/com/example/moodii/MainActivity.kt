@@ -28,6 +28,8 @@ import com.example.moodii.ui.theme.comfortaa
 import com.example.moodii.utilities.readCsv
 import com.example.moodii.quotes.*
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter",
@@ -92,8 +94,18 @@ fun AppNavigation(therapists: List<Therapist>) {
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val backgroundColor = MaterialTheme.colorScheme.primary
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val defaultBackgroundColor = MaterialTheme.colorScheme.primary
+    val quotesBackgroundColor = Color(0xFF006f83)
     val contentColor = MaterialTheme.colorScheme.onPrimary
+
+    val backgroundColor = if (currentRoute == BottomNavBar.Quotes.route) {
+        quotesBackgroundColor
+    } else {
+        defaultBackgroundColor
+    }
 
     BottomNavigation(
         backgroundColor = backgroundColor,

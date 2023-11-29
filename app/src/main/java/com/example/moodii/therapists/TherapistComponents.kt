@@ -26,8 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.example.moodii.ui.theme.comfortaa
 
@@ -95,8 +98,12 @@ fun TherapistItem(therapist: Therapist) {
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = therapist.phone,
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyLarge.merge(
+                            TextStyle(
+                                textDecoration = TextDecoration.Underline,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ),
                         modifier = Modifier.clickable {
                             // Using Intent to start the phone dialer
                             val intent = Intent(Intent.ACTION_DIAL).apply {
