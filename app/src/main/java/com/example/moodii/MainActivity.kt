@@ -22,11 +22,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moodii.navbar.BottomNavBar
-import com.example.moodii.therapists.Therapist
-import com.example.moodii.therapists.TherapistList
+import com.example.moodii.therapists.*
 import com.example.moodii.ui.theme.MoodiiTheme
 import com.example.moodii.ui.theme.comfortaa
 import com.example.moodii.utilities.readCsv
+import com.example.moodii.quotes.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter",
@@ -53,6 +54,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation(therapists: List<Therapist>) {
     val navController = rememberNavController()
+    val quoteViewModel: QuoteViewModel = viewModel()
 
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }
@@ -66,7 +68,9 @@ fun AppNavigation(therapists: List<Therapist>) {
             composable(BottomNavBar.Therapists.route) { 
                 TherapistList(therapists = therapists)
             }
-            composable(BottomNavBar.Quotes.route) {  }
+            composable(BottomNavBar.Quotes.route) { 
+                QuotesDisplay(quotes = quoteViewModel.quotes.value, onNewQuoteClicked = { quoteViewModel.newQuote()})
+            }
         }
     }
 }
@@ -130,30 +134,6 @@ fun BottomNavigationBar(navController: NavController) {
         )
     }
 }
-
-
-// Bottom Nav Bar -- In progress, for future implementation
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun MainScreen() {
-//    val navController = rememberNavController()
-//    Scaffold(bottomBar = {}
-//    ) {
-//        BottomNavGraph(navController = navController)
-//    }
-//}
-
-//@Composable
-//fun BottomBar(navController: NavHostController) {
-//    val screens = listOf(
-//        BottomBarScreen.Therapists,
-//        BottomBarScreen.MoodTracking,
-//        BottomBarScreen.MoodLifters
-//    )
-//    val navBackStackEntry by navController.currentBackStackEntryAsState()
-//    val currentDestination = navBackStackEntry?.destination
-//}
-
 
 //// Sample data for preview purposes
 //val sampleTherapists = listOf(
