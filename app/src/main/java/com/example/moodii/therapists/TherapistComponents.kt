@@ -40,7 +40,7 @@ fun TherapistList(therapists: List<Therapist>) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
-            color = MaterialTheme.colorScheme.primary,
+            color = Color(0xFFcd5b45),
             tonalElevation = 3.dp
         ) {
             Text(

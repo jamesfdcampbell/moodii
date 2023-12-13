@@ -67,7 +67,7 @@ fun AppNavigation(therapists: List<Therapist>, db: AppDatabase) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = BottomNavBar.Therapists.route,
+            startDestination = BottomNavBar.Moods.route,
             Modifier.padding(innerPadding)
         ) {
             composable(BottomNavBar.Moods.route) {
@@ -95,11 +95,14 @@ fun BottomNavigationBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val defaultBackgroundColor = MaterialTheme.colorScheme.primary
+    val therapistsBackgroundColor = Color(0xFFcd5b45)
     val quotesBackgroundColor = Color(0xFF006f83)
     val contentColor = MaterialTheme.colorScheme.onPrimary
 
     val backgroundColor = if (currentRoute == BottomNavBar.Quotes.route) {
         quotesBackgroundColor
+    } else if ( currentRoute == BottomNavBar.Therapists.route) {
+        therapistsBackgroundColor
     } else {
         defaultBackgroundColor
     }

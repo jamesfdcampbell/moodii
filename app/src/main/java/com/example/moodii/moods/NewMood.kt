@@ -1,5 +1,6 @@
 package com.example.moodii.moods
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,8 +34,11 @@ import com.example.moodii.R
 import com.example.moodii.moods.database.AppDatabase
 import com.example.moodii.ui.theme.comfortaa
 
+
 @Composable
 fun NewMood(db: AppDatabase) {
+    val context = LocalContext.current
+
     val moods = listOf("Very Happy", "Happy", "Neutral", "Unhappy", "Very Unhappy")
     val moodImages = listOf(
         painterResource(id = R.drawable.mood1),
@@ -100,7 +105,7 @@ fun NewMood(db: AppDatabase) {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp) // Larger text area
+                .height(285.dp) // Larger text area
                 .padding(16.dp),
             label = { Text("Mood Details") }
         )
@@ -111,6 +116,7 @@ fun NewMood(db: AppDatabase) {
                 Thread {
                     db.moodDao().insertMood(moodEntry)
                 }.start()
+                Toast.makeText(context, "New mood saved", Toast.LENGTH_LONG).show()
             },
             modifier = Modifier
                 .padding(top = 16.dp)
@@ -124,11 +130,3 @@ fun NewMood(db: AppDatabase) {
         }
     }
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun MoodPreview() {
-//    MaterialTheme {
-//        NewMood(db = AppDatabase)
-//    }
-//}
