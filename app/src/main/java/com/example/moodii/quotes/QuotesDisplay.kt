@@ -28,7 +28,10 @@ import com.example.moodii.ui.theme.comfortaa
 
 @Composable
 fun QuotesDisplay(quotes: List<Quote>?, onNewQuoteClicked: () -> Unit) {
+    // Load background image
     val backgroundPainter = painterResource(id = R.drawable.quotesbackground)
+
+    // Create a box to overlay the background image
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = backgroundPainter,
@@ -47,6 +50,7 @@ fun QuotesDisplay(quotes: List<Quote>?, onNewQuoteClicked: () -> Unit) {
                 color = Color.Transparent
             ) {
                 if (!quotes.isNullOrEmpty()) {
+                    // Display a quote and author if available
                     Box(modifier = Modifier.fillMaxSize()) {
                         Column(
                             modifier = Modifier
@@ -72,6 +76,7 @@ fun QuotesDisplay(quotes: List<Quote>?, onNewQuoteClicked: () -> Unit) {
                                 textAlign = TextAlign.Center
                             )
                         }
+                        // Button to load a new quote
                         Button(
                             onClick = onNewQuoteClicked,
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF006f83)),
@@ -84,7 +89,7 @@ fun QuotesDisplay(quotes: List<Quote>?, onNewQuoteClicked: () -> Unit) {
                         }
                     }
                 } else {
-                    // If it doesn't work, show a loading indicator
+                    // If quotes are not available, show a loading indicator
                     CircularProgressIndicator()
                 }
             }

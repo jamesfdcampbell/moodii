@@ -18,8 +18,10 @@ import com.example.moodii.ui.theme.comfortaa
 
 @Composable
 fun MoodMenu(navController: NavController) {
+    // Define button shape
     val buttonShape: Shape = RoundedCornerShape(60.dp)
 
+    // Create a vertical column layout
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,6 +29,7 @@ fun MoodMenu(navController: NavController) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Button for recording a new mood
         Button(
             onClick = { navController.navigate("newMood") },
             modifier = Modifier
@@ -45,6 +48,7 @@ fun MoodMenu(navController: NavController) {
             )
         }
 
+        // Button for accessing mood history
         Button(
             onClick = { navController.navigate("moodList") },
             modifier = Modifier.fillMaxWidth(),
@@ -62,11 +66,3 @@ fun MoodMenu(navController: NavController) {
         }
     }
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun GreetingPreview() {
-//    MaterialTheme {
-//        com.example.moodii.moods.MoodMenu(navController)
-//    }
-//}

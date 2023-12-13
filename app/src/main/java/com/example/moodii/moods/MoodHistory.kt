@@ -1,6 +1,5 @@
 package com.example.moodii.moods
 
-//import com.example.moodii.moods.database.MoodViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,21 +37,31 @@ import com.example.moodii.utilities.formatTimestamp
 
 @Composable
 fun DisplayMoodHistory() {
+    // Get the current context
     val context = LocalContext.current
+
+    // Initialize the list of mood entries
     var itemList by remember { mutableStateOf(emptyList<MoodEntry>()) }
 
+    // Create a coroutine scope
     val coroutine = rememberCoroutineScope()
+
+    // Get a reference to the database
     val db = AppDatabase.getDatabase(LocalContext.current)
 
+    // Use a LaunchedEffect to fetch mood data in the background
     LaunchedEffect(key1 = true) {
         // Fetch the data in IO context (background thread)
         val moods = withContext(Dispatchers.IO) {
             db.moodDao().getAllMoods()
         }
+        // Update the list of mood entries
         itemList = moods
     }
 
+    // Create a column for displaying the UI
     Column {
+        // Display the Mood History title
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -69,6 +78,8 @@ fun DisplayMoodHistory() {
                     .padding(16.dp)
             )
         }
+
+        // Create a LazyColumn for displaying mood entries
         LazyColumn {
             items(itemList) { item ->
                 Card(
@@ -77,7 +88,7 @@ fun DisplayMoodHistory() {
                         .fillMaxWidth()
                         .padding(8.dp)
                 ) {
-                    // First Row: Timestamp
+                    // First Row: Display the timestamp
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -94,6 +105,7 @@ fun DisplayMoodHistory() {
                         )
                     }
 
+                    // Second Row: Display mood image and text
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
@@ -126,7 +138,7 @@ fun DisplayMoodHistory() {
                         )
                     }
 
-                    // Third Row: Mood Details
+                    // Third Row: Display mood details
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

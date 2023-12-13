@@ -34,8 +34,6 @@ import com.example.moodii.moods.DisplayMoodHistory
 import com.example.moodii.moods.database.AppDatabase
 import com.example.moodii.moods.NewMood
 
-//import com.example.moodii.moods.database.MoodViewModel
-
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +71,10 @@ fun AppNavigation(therapists: List<Therapist>, db: AppDatabase) {
             composable(BottomNavBar.Moods.route) {
                 MoodMenu(navController)
             }
-            composable(BottomNavBar.Therapists.route) { 
+            composable(BottomNavBar.Therapists.route) {
                 TherapistList(therapists = therapists)
             }
-            composable(BottomNavBar.Quotes.route) { 
+            composable(BottomNavBar.Quotes.route) {
                 QuotesDisplay(quotes = quoteViewModel.quotes.value, onNewQuoteClicked = { quoteViewModel.newQuote()})
             }
             composable("newMood") {
@@ -94,63 +92,79 @@ fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // Define background colors for different routes
     val defaultBackgroundColor = MaterialTheme.colorScheme.primary
     val therapistsBackgroundColor = Color(0xFFcd5b45)
     val quotesBackgroundColor = Color(0xFF006f83)
     val contentColor = MaterialTheme.colorScheme.onPrimary
 
+    // Determine the background color based on the current route
     val backgroundColor = if (currentRoute == BottomNavBar.Quotes.route) {
         quotesBackgroundColor
-    } else if ( currentRoute == BottomNavBar.Therapists.route) {
+    } else if (currentRoute == BottomNavBar.Therapists.route) {
         therapistsBackgroundColor
     } else {
         defaultBackgroundColor
     }
 
+    // Create the bottom navigation bar with items and colors
     BottomNavigation(
         backgroundColor = backgroundColor,
         contentColor = contentColor
     ) {
         BottomNavigationItem(
-            icon = { Icon(
-                painter = painterResource(id = R.drawable.moodtracking_icon),
-                contentDescription = "An icon for Mood Tracking, depicted by a small image of a calendar.",
-                tint = contentColor) },
-            label = { Text("Moods",
-                color = Color.White,
-                fontFamily = comfortaa) },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.moodtracking_icon),
+                    contentDescription = "An icon for Mood Tracking, depicted by a small image of a calendar.",
+                    tint = contentColor
+                )
+            },
+            label = {
+                Text(
+                    "Moods",
+                    color = Color.White,
+                    fontFamily = comfortaa
+                )
+            },
             selected = navController.currentDestination?.route == BottomNavBar.Moods.route,
             onClick = { navController.navigate(BottomNavBar.Moods.route) }
         )
         BottomNavigationItem(
-            icon = { Icon(
-                painter = painterResource(id = R.drawable.therapist_icon),
-                contentDescription = "An icon for Therapists, depicted by an image of a head with a gear where the brain would be.",
-                tint = contentColor) },
-            label = { Text("Therapists",
-                color = Color.White,
-                fontFamily = comfortaa) },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.therapist_icon),
+                    contentDescription = "An icon for Therapists, depicted by an image of a head with a gear where the brain would be.",
+                    tint = contentColor
+                )
+            },
+            label = {
+                Text(
+                    "Therapists",
+                    color = Color.White,
+                    fontFamily = comfortaa
+                )
+            },
             selected = navController.currentDestination?.route == BottomNavBar.Therapists.route,
             onClick = { navController.navigate(BottomNavBar.Therapists.route) }
         )
         BottomNavigationItem(
-            icon = { Icon(
-                painter = painterResource(id = R.drawable.moodlifter_icon),
-                contentDescription = "An icon for Quotes, depicted by an image of a smiling face.",
-                tint = contentColor) },
-            label = { Text("Quotes",
-                color = Color.White,
-                fontFamily = comfortaa) },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.moodlifter_icon),
+                    contentDescription = "An icon for Quotes, depicted by an image of a smiling face.",
+                    tint = contentColor
+                )
+            },
+            label = {
+                Text(
+                    "Quotes",
+                    color = Color.White,
+                    fontFamily = comfortaa
+                )
+            },
             selected = navController.currentDestination?.route == BottomNavBar.Quotes.route,
             onClick = { navController.navigate(BottomNavBar.Quotes.route) }
         )
     }
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun GreetingPreview() {
-//    MoodiiTheme {
-//        TherapistList(therapists = sampleTherapists)
-//    }
-//}

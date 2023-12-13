@@ -34,11 +34,12 @@ import com.example.moodii.R
 import com.example.moodii.moods.database.AppDatabase
 import com.example.moodii.ui.theme.comfortaa
 
-
 @Composable
 fun NewMood(db: AppDatabase) {
+    // Get the current context
     val context = LocalContext.current
 
+    // Define mood options and their corresponding images
     val moods = listOf("Very Happy", "Happy", "Neutral", "Unhappy", "Very Unhappy")
     val moodImages = listOf(
         painterResource(id = R.drawable.mood1),
@@ -48,6 +49,7 @@ fun NewMood(db: AppDatabase) {
         painterResource(id = R.drawable.mood5)
     )
 
+    // Initialize selected mood and mood details
     var selectedMood by remember { mutableStateOf(moods.first()) }
     var moodDetails by remember { mutableStateOf("") }
 
@@ -55,6 +57,7 @@ fun NewMood(db: AppDatabase) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        // Display the "How are you feeling?" title
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,6 +75,7 @@ fun NewMood(db: AppDatabase) {
             )
         }
 
+        // Create radio buttons for mood selection
         moods.forEachIndexed { index, mood ->
             Row(
                 modifier = Modifier
@@ -97,6 +101,7 @@ fun NewMood(db: AppDatabase) {
             }
         }
 
+        // Create a text field for mood details
         TextField(
             value = moodDetails,
             onValueChange = { moodDetails = it },
@@ -110,6 +115,7 @@ fun NewMood(db: AppDatabase) {
             label = { Text("Mood Details") }
         )
 
+        // Create a button to save the mood entry
         Button(
             onClick = {
                 val moodEntry = MoodEntry(mood = selectedMood, moodDetails = moodDetails)
