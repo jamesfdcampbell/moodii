@@ -25,7 +25,7 @@ sealed class BottomNavBar(
         icon = R.drawable.moodlifter_icon
     )
 
-    companion object {
-        fun values() = listOf(Moods, Therapists, Quotes)
-    }
+//    companion object {
+//        fun values() = listOf(Moods, Therapists, Quotes)
+//    }
 }

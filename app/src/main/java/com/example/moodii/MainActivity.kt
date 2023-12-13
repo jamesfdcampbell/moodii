@@ -1,6 +1,6 @@
 package com.example.moodii
 
-import android.annotation.SuppressLint
+import com.example.moodii.moods.MoodMenu
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,23 +30,27 @@ import com.example.moodii.quotes.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.moodii.moods.DisplayMoodHistory
+import com.example.moodii.moods.database.AppDatabase
+import com.example.moodii.moods.NewMood
+
+//import com.example.moodii.moods.database.MoodViewModel
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter",
-        "UnusedMaterial3ScaffoldPaddingParameter"
-    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val therapists = readCsv(resources.openRawResource(R.raw.therapists))
-
         setContent {
+            val therapists = readCsv(resources.openRawResource(R.raw.therapists))
+            val db = MyApp.database
+
             MoodiiTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation(therapists)
+                    AppNavigation(therapists, db)
                 }
             }
         }
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavigation(therapists: List<Therapist>) {
+fun AppNavigation(therapists: List<Therapist>, db: AppDatabase) {
     val navController = rememberNavController()
     val quoteViewModel: QuoteViewModel = viewModel()
 
@@ -66,31 +70,24 @@ fun AppNavigation(therapists: List<Therapist>) {
             startDestination = BottomNavBar.Therapists.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavBar.Moods.route) { }
+            composable(BottomNavBar.Moods.route) {
+                MoodMenu(navController)
+            }
             composable(BottomNavBar.Therapists.route) { 
                 TherapistList(therapists = therapists)
             }
             composable(BottomNavBar.Quotes.route) { 
                 QuotesDisplay(quotes = quoteViewModel.quotes.value, onNewQuoteClicked = { quoteViewModel.newQuote()})
             }
+            composable("newMood") {
+                NewMood(db = db)
+            }
+            composable("moodList") {
+                DisplayMoodHistory()
+            }
         }
     }
 }
-
-//@Composable
-//fun MoodsScreen() {
-//    // Define the UI for the Moods screen
-//}
-//
-//@Composable
-//fun TherapistsScreen() {
-//    // Define the UI for the Therapists screen
-//}
-//
-//@Composable
-//fun QuotesScreen() {
-//    // Define the UI for the Quotes screen
-//}
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -147,22 +144,6 @@ fun BottomNavigationBar(navController: NavController) {
     }
 }
 
-//// Sample data for preview purposes
-//val sampleTherapists = listOf(
-//    MainActivity.Therapist(
-//        "Jennifer N Schultz",
-//        "Counsellor, MA",
-//        "Are you worried?",
-//        "431-301-4321"
-//    ),
-//    MainActivity.Therapist(
-//        "Debbie Lynn Tabin",
-//        "Registered Social Worker, BSW, RSW, MAL",
-//        "Do you find it hard?",
-//        "null"
-//    )
-//)
-//
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun GreetingPreview() {
